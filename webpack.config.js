@@ -39,6 +39,7 @@ module.exports = {
             options: {
               presets: [
                 'es2017',
+                'stage-2',
                 'react'
               ],
             },
