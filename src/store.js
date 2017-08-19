@@ -1,9 +1,19 @@
 
 import { createStore, applyMiddleware, compose } from 'redux';
-import { createEpicMiddleware, combineEpics } from 'redux-observable';
-import reducers from './reducers';
+import { createEpicMiddleware } from 'redux-observable';
 
-const rootEpicMiddleware = createEpicMiddleware(combineEpics());
+import reducers from './reducers';
+import epics from './epics';
+
+import LastFM from './services/lastfm';
+
+const lastFMClient = LastFM(LASTFM_API_KEY);
+
+const rootEpicMiddleware = createEpicMiddleware(epics, {
+  dependencies: {
+    lastFM: lastFMClient,
+  },
+});
 
 const configureStore = () => createStore(reducers, compose(
   applyMiddleware(rootEpicMiddleware),

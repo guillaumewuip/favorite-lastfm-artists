@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 
 const API_ROOT = 'http://ws.audioscrobbler.com/2.0/';
 
-const getFavoritesSongs = (apiKey) => (userId, page = 1, limit = 100) => {
+const getFavoritesTracks = (apiKey) => (userId, page = 1, limit = 100) => {
   const query = queryString.stringify({
     method:  'user.getlovedtracks',
     user:    userId,
@@ -60,9 +60,9 @@ const getArtistInfo = (apiKey) => (name, mbid, username = undefined, lang = 'en'
   );
 };
 
-export const Api = (apiKey) => ({
-  getFavoritesSongs: getFavoritesSongs(apiKey),
+const Api = (apiKey) => ({
+  getFavoritesTracks: getFavoritesTracks(apiKey),
   getArtistInfo:     getArtistInfo(apiKey),
 });
 
-export default const lastFMClient = LastFM(LASTFM_API_KEY);
+export default Api;

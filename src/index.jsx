@@ -5,13 +5,13 @@ import ReactDOM from 'react-dom';
 import configureStore from './store';
 import App from './app';
 
+import { loadFavoriteTracks } from './actions';
+
 console.log(`🚀 App version : ${VERSION}`);
 
 const store = configureStore();
 
-// store.dispatch({
-//     type: INIT,
-// });
+store.dispatch(loadFavoriteTracks());
 
 ReactDOM.render(
   <App />,
