@@ -4,7 +4,8 @@ import unzip from 'lodash/unzip';
 import merge from 'lodash/merge';
 
 import {
-  ADD_NEW_TRACKS
+  ADD_NEW_TRACKS,
+  ADD_NEW_ARTIST_INFO
 } from '../actions';
 
 const initialState = fromJS({
@@ -41,10 +42,21 @@ const addTracks = (state, sources) => {
   );
 };
 
+const addArtistInfo = (state, name, info) => {
+  const artist = state.getIn(['artists', name]);
+
+  return state.setIn(['artists', name], artist.merge({
+    image: info.image[3]['#text'],
+    tags:  info.tags.tag,
+  }));
+};
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
   case ADD_NEW_TRACKS:
     return addTracks(state, action.tracks);
+  case ADD_NEW_ARTIST_INFO:
+    return addArtistInfo(state, action.artist, action.info);
   default:
     return state;
   }

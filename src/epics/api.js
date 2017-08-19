@@ -57,7 +57,6 @@ export const loadFavoriteArtistsInfo = (action$, store, { lastFM }) =>
         .catch(() => Observable.empty())
       )
     )
-    .do((info) => console.log('info', info))
     .map(addNewArtistInfo);
 
 export default combineEpics(

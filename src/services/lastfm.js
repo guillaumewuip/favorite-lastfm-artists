@@ -60,7 +60,7 @@ const getArtistInfo = (apiKey) => (
         if (body.error) {
           throw new Error(body.message);
         }
-        return body;
+        return { artist: name, info: body.artist };
       })
   );
 };

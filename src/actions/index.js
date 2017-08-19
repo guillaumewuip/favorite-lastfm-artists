@@ -6,4 +6,8 @@ export const ADD_NEW_TRACKS = 'ADD_NEW_TRACKS';
 export const addNewTracks = (tracks) => ({ type: ADD_NEW_TRACKS, tracks });
 
 export const ADD_NEW_ARTIST_INFO = 'ADD_NEW_ARTIST_INFO';
-export const addNewArtistInfo = (info) => ({ type: ADD_NEW_ARTIST_INFO, info });
+export const addNewArtistInfo = (result) => ({
+  type:   ADD_NEW_ARTIST_INFO,
+  artist: result.artist,
+  info:   result.info,
+});
