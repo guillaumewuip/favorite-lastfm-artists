@@ -5,8 +5,12 @@ import merge from 'lodash/merge';
 
 import {
   ADD_NEW_TRACKS,
-  ADD_NEW_ARTIST_INFO
+  ADD_NEW_ARTIST_INFO,
 } from '../actions';
+
+import {
+  LOAD_FAVORITE_TRACKS_SUCCESS,
+} from '../epics/api';
 
 const initialState = fromJS({
   artists: {},
@@ -21,15 +25,17 @@ const addTracks = (state, sources) => {
 
   const [newTracks, newArtists] = unzip(sources.map((source) => [
     {
-      name:  source.name,
-      mbid:  source.mbid,
-      url:   source.url,
-      image: source.image[3]['#text'],
+      name:   source.name,
+      mbid:   source.mbid,
+      url:    source.url,
+      image:  source.image[3]['#text'],
+      artist: source.artist.name,
     },
     {
-      name: source.artist.name,
-      mbid: source.artist.mbid,
-      url:  source.artist.url,
+      name:        source.artist.name,
+      mbid:        source.artist.mbid,
+      url:         source.artist.url,
+      occurrences: 0,
     },
   ]));
 
@@ -67,12 +73,29 @@ const addArtistInfo = (state, name, info) => {
   );
 };
 
+const countArtistsOccurences = (state) => {
+  const
+    tracks  = state.get('tracks'),
+    artists = state.get('artists');
+
+  const occurrences = tracks.countBy((track) => track.artist);
+
+  return (state
+    .set('artists', artists.map((artist) => artist.set(
+      'occurrences',
+      occurrences.get(artist.get('name'))
+    )))
+  );
+};
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
   case ADD_NEW_TRACKS:
     return addTracks(state, action.tracks);
   case ADD_NEW_ARTIST_INFO:
     return addArtistInfo(state, action.artist, action.info);
+  case LOAD_FAVORITE_TRACKS_SUCCESS:
+    return countArtistsOccurences(state);
   default:
     return state;
   }
