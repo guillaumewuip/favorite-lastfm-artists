@@ -19,7 +19,7 @@ const getFavoritesTracks = (apiKey) => (userId, page = 1, limit = 100) => {
     fetch(`${API_ROOT}?${query}`)
       .then((response) => {
         if (response.status >= 400) {
-          throw new Error("Bad response from server");
+          throw new Error('Bad response from server');
         }
         return response.json();
       })
@@ -32,7 +32,12 @@ const getFavoritesTracks = (apiKey) => (userId, page = 1, limit = 100) => {
   );
 };
 
-const getArtistInfo = (apiKey) => (name, mbid, username = undefined, lang = 'en') => {
+const getArtistInfo = (apiKey) => (
+  name,
+  mbid,
+  username = undefined,
+  lang = 'en'
+) => {
   const query = queryString.stringify({
     method:  'artist.getInfo',
     name,
@@ -62,7 +67,7 @@ const getArtistInfo = (apiKey) => (name, mbid, username = undefined, lang = 'en'
 
 const Api = (apiKey) => ({
   getFavoritesTracks: getFavoritesTracks(apiKey),
-  getArtistInfo:     getArtistInfo(apiKey),
+  getArtistInfo:      getArtistInfo(apiKey),
 });
 
 export default Api;

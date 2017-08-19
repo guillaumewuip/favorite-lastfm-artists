@@ -7,7 +7,7 @@ import epics from './epics';
 
 import LastFM from './services/lastfm';
 
-const lastFMClient = LastFM(LASTFM_API_KEY);
+const lastFMClient = LastFM(LASTFM_API_KEY); // eslint-disable-line no-undef
 
 const rootEpicMiddleware = createEpicMiddleware(epics, {
   dependencies: {

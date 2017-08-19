@@ -28,11 +28,11 @@ export const getFavoritesTracks = (client) => (userId, page = 1) => (
 export const LOAD_FAVORITE_TRACKS_SUCCESS = 'LOAD_FAVORITE_TRACKS_SUCCESS';
 export const loadFavoriteTracksOnInitEpics = (action$, store, { lastFM }) =>
   action$
-  .ofType(LOAD_FAVORITE_TRACKS)
-  .flatMap(() => getFavoritesTracks(lastFM)('guillaumewuip')
-    .map(addNewTrack)
-    .concat(Observable.of({ type: LOAD_FAVORITE_TRACKS_SUCCESS }))
-  );
+    .ofType(LOAD_FAVORITE_TRACKS)
+    .flatMap(() => getFavoritesTracks(lastFM)('guillaumewuip')
+      .map(addNewTrack)
+      .concat(Observable.of({ type: LOAD_FAVORITE_TRACKS_SUCCESS }))
+    );
 
 export default combineEpics(
   loadFavoriteTracksOnInitEpics

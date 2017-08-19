@@ -7,13 +7,10 @@ import App from './app';
 
 import { loadFavoriteTracks } from './actions';
 
-console.log(`🚀 App version : ${VERSION}`);
+console.log(`🚀 App version : ${VERSION}`); // eslint-disable-line no-undef
 
 const store = configureStore();
 
 store.dispatch(loadFavoriteTracks());
 
-ReactDOM.render(
-  <App />,
-  document.querySelector('.js-app')
-);
+ReactDOM.render(<App />, document.querySelector('.js-app'));
