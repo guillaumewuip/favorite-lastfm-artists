@@ -11,6 +11,7 @@ import {
 const initialState = fromJS({
   artists: {},
   tracks:  [],
+  tags:    {},
 });
 
 const addTracks = (state, sources) => {
@@ -43,12 +44,27 @@ const addTracks = (state, sources) => {
 };
 
 const addArtistInfo = (state, name, info) => {
-  const artist = state.getIn(['artists', name]);
+  const
+    artist = state.getIn(['artists', name]),
+    tags   = state.get('tags');
 
-  return state.setIn(['artists', name], artist.merge({
-    image: info.image[3]['#text'],
-    tags:  info.tags.tag,
-  }));
+  const newTags = merge(...info.tags.tag.map((tag) => ({
+    [tag.name]: {
+      name:        tag.name,
+      url:         tag.url,
+      occurrences: (tags.get(tag.name)
+        ? tags.get(tag.name).get('occurrences') + 1
+        : 1),
+    },
+  })));
+
+  return (state
+    .setIn(['artists', name], artist.merge({
+      image: info.image[3]['#text'],
+      tags:  info.tags.tag,
+    }))
+    .set('tags', tags.merge(newTags))
+  );
 };
 
 const reducer = (state = initialState, action) => {
