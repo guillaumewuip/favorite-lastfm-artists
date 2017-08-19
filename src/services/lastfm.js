@@ -60,9 +60,9 @@ const getArtistInfo = (apiKey) => (name, mbid, username = undefined, lang = 'en'
   );
 };
 
-const Api = (apiKey) => ({
+export const Api = (apiKey) => ({
   getFavoritesSongs: getFavoritesSongs(apiKey),
   getArtistInfo:     getArtistInfo(apiKey),
 });
 
-export default Api;
+export default const lastFMClient = LastFM(LASTFM_API_KEY);
