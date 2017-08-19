@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 
 import {
   LOAD_FAVORITE_TRACKS,
-  addNewTrack
+  addNewTracks
 } from '../actions';
 
 export const getFavoritesTracks = (client) => (userId, page = 1) => (
@@ -12,15 +12,15 @@ export const getFavoritesTracks = (client) => (userId, page = 1) => (
     .flatMap((response) => {
       const
         tracks      = response.lovedtracks.track,
-        currentPage = response.lovedtracks['@attr'].page,
-        totalPage = response.lovedtracks['@attr'].totalPages;
+        currentPage = parseInt(response.lovedtracks['@attr'].page, 10),
+        totalPage   = parseInt(response.lovedtracks['@attr'].totalPages, 10);
 
-      const result$ = Observable.from(tracks);
+      const result$ = Observable.from([tracks]);
 
       return result$.concat(
         currentPage >= totalPage
           ? Observable.empty()
-          : getFavoritesTracks(userId, page + 1)
+          : getFavoritesTracks(client)(userId, page + 1)
       );
     })
 );
@@ -30,7 +30,8 @@ export const loadFavoriteTracksOnInitEpics = (action$, store, { lastFM }) =>
   action$
     .ofType(LOAD_FAVORITE_TRACKS)
     .flatMap(() => getFavoritesTracks(lastFM)('guillaumewuip')
-      .map(addNewTrack)
+      .filter((result) => !!result)
+      .map(addNewTracks)
       .concat(Observable.of({ type: LOAD_FAVORITE_TRACKS_SUCCESS }))
     );
 
