@@ -10,13 +10,15 @@ import {
 
 import {
   LOAD_FAVORITE_TRACKS_SUCCESS,
+  LOAD_FAVORITE_ARTISTS_SUCCESS,
 } from '../epics/api';
 
 const initialState = fromJS({
-  loading: true,
-  artists: {},
-  tracks:  [],
-  tags:    {},
+  loadingTracks: true,
+  loadingInfos:  true,
+  artists:       {},
+  tracks:        [],
+  tags:          {},
 });
 
 const addTracks = (state, sources) => {
@@ -97,7 +99,9 @@ const reducer = (state = initialState, action) => {
   case ADD_NEW_ARTIST_INFO:
     return addArtistInfo(state, action.artist, action.info);
   case LOAD_FAVORITE_TRACKS_SUCCESS:
-    return countArtistsOccurences(state).set('loading', false);
+    return countArtistsOccurences(state).set('loadingTracks', false);
+  case LOAD_FAVORITE_ARTISTS_SUCCESS:
+    return state.set('loadingInfos', false);
   default:
     return state;
   }

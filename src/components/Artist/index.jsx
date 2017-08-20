@@ -39,11 +39,12 @@ const Image = ({ name, image, url }) => {
   );
 };
 
-const Artist = ({ name, image, tags, url }) => (
+const Artist = ({ name, image, tags, url, stars }) => (
   <div className="artist">
     <Image image={image} name={name} url={url} />
     <div className="artist-info">
       <span className="artist-name">{name}</span>
+      { stars ? <span className="artist-stars">{'*'.repeat(stars)}</span> : '' }
       <div className="artist-tags">
         { tags.map((tag) => <Tag key={tag.name} name={tag.name} />) }
       </div>
