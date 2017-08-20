@@ -13,25 +13,35 @@ const getRandomColor = (seed) => randomColor({
   seed,
 });
 
-const Image = ({ name, image }) => {
+const Image = ({ name, image, url }) => {
+  const link = (<a className="artist-link" href={url} target="_blank">
+    <div className="artist-link-icon">▶︎</div>
+  </a>);
+
   if (!image) {
-    return (<div
-      className="artist-image mod-no-image"
-      style={{ backgroundColor: getRandomColor(name) }}
-    />);
+    return (
+      <div
+        className="artist-image mod-no-image"
+        style={{ backgroundColor: getRandomColor(name) }}
+      >
+        {link}
+      </div>
+    );
   }
 
   return (
     <div
       className="artist-image"
       style={{ backgroundImage: `url(${image})` }}
-    />
+    >
+      {link}
+    </div>
   );
 };
 
-const Artist = ({ name, image, tags }) => (
+const Artist = ({ name, image, tags, url }) => (
   <div className="artist">
-    <Image image={image} name={name} />
+    <Image image={image} name={name} url={url} />
     <div className="artist-info">
       <span className="artist-name">{name}</span>
       <div className="artist-tags">

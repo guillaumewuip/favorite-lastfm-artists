@@ -20,6 +20,7 @@ class App extends React.Component {
         name={artist.name}
         image={artist.image}
         tags={artist.tags}
+        url={artist.url}
       />
     ));
 
