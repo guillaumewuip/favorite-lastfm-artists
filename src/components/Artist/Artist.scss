@@ -1,0 +1,39 @@
+
+.artists-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  align-content: stretch;
+}
+
+  .artist {
+    flex: 1;
+    padding: 4px;
+    flex-basis: 12%;
+    background: #090b0e;
+  }
+
+    .artist-image {
+      width: 100%;
+      background-position: center center;
+      background-size: contain;
+
+      &:after {
+        content: '';
+        display: block;
+        padding-bottom: 100%;
+      }
+    }
+
+    .artist-info {
+      width: 100%;
+      color: #dedede;
+      font-family: 'Inconsolata', sans-serif;
+      margin: 4px 0 0 0;
+    }
+
+      .artist-name {
+        font-weight: 700;
+        font-size: 1em;
+      }

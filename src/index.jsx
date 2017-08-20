@@ -1,6 +1,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 
 import configureStore from './store';
 import App from './app';
@@ -13,4 +14,9 @@ const store = configureStore();
 
 store.dispatch(loadFavoriteTracks());
 
-ReactDOM.render(<App />, document.querySelector('.js-app'));
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.querySelector('.js-app')
+);
