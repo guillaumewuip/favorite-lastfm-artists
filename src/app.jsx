@@ -10,8 +10,13 @@ import './styles/index.scss';
 
 class App extends React.Component {
   render() {
-    if (this.props.loading) {
-      return (<Loader />);
+    if (this.props.loadingTracks || this.props.loadingInfos) {
+      return (<Loader
+        desc={this.props.loadingTracks
+          ? 'Loading favorite tracks'
+          : 'Loading artists info'
+        }
+      />);
     }
 
     const artists = this.props.artists.map((artist) => (

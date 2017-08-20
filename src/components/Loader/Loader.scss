@@ -7,12 +7,16 @@
   justify-content: center;
   align-items: center;
   font-family: 'Inconsolata', sans-serif;
-
-  animation: blink-animation 1s steps(5, start) infinite;
+  text-align: center;
 }
 
-  .loader-text {
-    flex: 1;
+  .loader-blink {
+    animation: blink-animation 1s steps(5, start) infinite;
+  }
+
+  .loader-desc {
+    margin-top: 1em;
+    color: #a2a2a2;
   }
 
 @keyframes blink-animation {
