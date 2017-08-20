@@ -4,13 +4,18 @@ import { connect } from 'react-redux';
 import values from 'lodash/values';
 import reduce from 'lodash/reduce';
 import some from 'lodash/some';
+import sortBy from 'lodash/sortBy';
+import reverse from 'lodash/reverse';
+import filter from 'lodash/filter';
 
 import Loader from './components/Loader';
 import Artist from './components/Artist';
 import Search from './components/Search';
+import Tag from './components/Tag';
 
 import {
   searchTerm,
+  toggleFilterTag,
 } from './actions';
 
 import './styles/index.scss';
@@ -49,6 +54,16 @@ class App extends React.Component {
 
         return artistNameMatch || tagsMatch;
       })
+      .filter((artist) => {
+        if (this.props.filterTags.length === 0) {
+          return true;
+        }
+
+        return some(
+          artist.tags,
+          (tag) => this.props.filterTags.indexOf(tag.name.toLowerCase()) > -1
+        );
+      })
       .map((artist) => (
         <Artist
           key={artist.name}
@@ -62,10 +77,28 @@ class App extends React.Component {
         />
       ));
 
+    const tags = reverse(sortBy(
+      filter(this.props.tags, (tag) => tag.occurrences > 1),
+      ['occurrences']
+    )).map((tag) => (
+      <Tag
+        key={tag.name}
+        name={tag.name}
+        disabled={!this.props.filterTags.includes(tag.name)}
+        clickable
+        onClick={() => this.props.toggleFilterTag(tag.name)}
+      />
+    ));
+
     return (
       <div>
         <nav className="filter-bar">
-          <Search onChange={(term) => this.props.searchTerm(term)} />
+          <div className="filter-tags">
+            {tags}
+          </div>
+          <div>
+            <Search onChange={(term) => this.props.searchTerm(term)} />
+          </div>
         </nav>
         <div className="artists-container">
           {artists}
@@ -82,9 +115,10 @@ const mapStateToProps = (state) => ({
   tracks:        state.get('tracks').toJS(),
   tags:          state.get('tags').toJS(),
   filterTerm:    state.getIn(['filter', 'term']),
-  filterTags:    state.getIn(['filter', 'tags']),
+  filterTags:    state.getIn(['filter', 'tags']).toJS(),
 });
 
 export default connect(mapStateToProps, {
   searchTerm,
+  toggleFilterTag,
 })(App);

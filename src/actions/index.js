@@ -23,3 +23,9 @@ export const saveSearchTerm = (term) => ({
   type: SAVE_SEARCH_TERM,
   term: term.length ? term.toLowerCase() : null,
 });
+
+export const TOGGLE_FILTER_TAG = 'TOGGLE_FILTER_TAG';
+export const toggleFilterTag = (tag) => ({
+  type: TOGGLE_FILTER_TAG,
+  tag:  tag.toLowerCase(),
+});

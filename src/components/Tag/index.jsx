@@ -4,9 +4,17 @@ import cs from 'classnames';
 
 import './Tag.scss';
 
-const Tag = ({ name, size = 'normal' }) => (
+const Tag = ({ name, disabled, clickable, onClick }) => (
   <span className="tag-wrapper">
-    <span className={cs('tag', `mod-${size}`)}>{name}</span> <span />
+    <button
+      className={cs(
+        'tag',
+        { 'mod-off': disabled, 'mod-clickable': clickable },
+      )}
+      onClick={() => (onClick ? onClick() : null)}
+    >
+      {name}
+    </button> <span />
   </span>
 );
 

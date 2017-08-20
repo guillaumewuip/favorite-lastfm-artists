@@ -1,6 +1,7 @@
 
 .tag-wrapper {
   line-height: 1.3em;
+  font-family: "Inconsolata", sans-serif;
 }
 
   .tag {
@@ -11,6 +12,16 @@
     white-space: nowrap;
     font-size: .8em;
     text-transform: capitalize;
+    border: 0;
+  }
+
+  .tag.mod-off {
+    background: rgba(255, 255, 255, .15);
+    color: #999;
+  }
+
+  .tag.mod-clickable {
+    cursor: pointer;
   }
 
 .tag.mod-big {

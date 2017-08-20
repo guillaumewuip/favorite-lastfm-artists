@@ -7,6 +7,7 @@ import {
   ADD_NEW_TRACKS,
   ADD_NEW_ARTIST_INFO,
   SAVE_SEARCH_TERM,
+  TOGGLE_FILTER_TAG,
 } from '../actions';
 
 import {
@@ -100,6 +101,16 @@ const countArtistsOccurences = (state) => {
 const saveSearchTerm = (state, term) => state
   .setIn(['filter', 'term'], term);
 
+const toggleFilterTag = (state, tag) => {
+  const tags = state.get('filter').get('tags');
+
+  if (tags.indexOf(tag) > -1) {
+    return state.setIn(['filter', 'tags'], tags.delete(tags.indexOf(tag)));
+  }
+
+  return state.setIn(['filter', 'tags'], tags.push(tag));
+};
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
   case ADD_NEW_TRACKS:
@@ -112,6 +123,8 @@ const reducer = (state = initialState, action) => {
     return state.set('loadingInfos', false);
   case SAVE_SEARCH_TERM:
     return saveSearchTerm(state, action.term);
+  case TOGGLE_FILTER_TAG:
+    return toggleFilterTag(state, action.tag);
   default:
     return state;
   }
