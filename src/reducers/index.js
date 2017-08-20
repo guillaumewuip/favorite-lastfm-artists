@@ -36,6 +36,7 @@ const addTracks = (state, sources) => {
       name:        source.artist.name,
       mbid:        source.artist.mbid,
       url:         source.artist.url,
+      tags:        [],
       occurrences: 0,
     },
   ]));

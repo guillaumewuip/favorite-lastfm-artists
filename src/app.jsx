@@ -19,6 +19,7 @@ class App extends React.Component {
         key={artist.name}
         name={artist.name}
         image={artist.image}
+        tags={artist.tags}
       />
     ));
 

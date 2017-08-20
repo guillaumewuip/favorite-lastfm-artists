@@ -1,6 +1,7 @@
 
 import React from 'react';
 import randomColor from 'randomcolor';
+import Tag from '../Tag';
 
 import './Artist.scss';
 
@@ -28,11 +29,14 @@ const Image = ({ name, image }) => {
   );
 };
 
-const Artist = ({ name, image }) => (
+const Artist = ({ name, image, tags }) => (
   <div className="artist">
     <Image image={image} name={name} />
     <div className="artist-info">
       <span className="artist-name">{name}</span>
+      <div className="artist-tags">
+        { tags.map((tag) => <Tag key={tag.name} name={tag.name} />) }
+      </div>
     </div>
   </div>
 );
