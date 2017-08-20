@@ -11,3 +11,15 @@ export const addNewArtistInfo = (result) => ({
   artist: result.artist,
   info:   result.info,
 });
+
+export const SEARCH_TERM = 'SEARCH_TERM';
+export const searchTerm = (term) => ({
+  type: SEARCH_TERM,
+  term,
+});
+
+export const SAVE_SEARCH_TERM = 'SAVE_SEARCH_TERM';
+export const saveSearchTerm = (term) => ({
+  type: SAVE_SEARCH_TERM,
+  term: term.length ? term.toLowerCase() : null,
+});

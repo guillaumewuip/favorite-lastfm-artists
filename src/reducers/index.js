@@ -6,6 +6,7 @@ import merge from 'lodash/merge';
 import {
   ADD_NEW_TRACKS,
   ADD_NEW_ARTIST_INFO,
+  SAVE_SEARCH_TERM,
 } from '../actions';
 
 import {
@@ -19,6 +20,10 @@ const initialState = fromJS({
   artists:       {},
   tracks:        [],
   tags:          {},
+  filter:        {
+    term: null,
+    tags: [],
+  },
 });
 
 const addTracks = (state, sources) => {
@@ -92,6 +97,9 @@ const countArtistsOccurences = (state) => {
   );
 };
 
+const saveSearchTerm = (state, term) => state
+  .setIn(['filter', 'term'], term);
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
   case ADD_NEW_TRACKS:
@@ -102,6 +110,8 @@ const reducer = (state = initialState, action) => {
     return countArtistsOccurences(state).set('loadingTracks', false);
   case LOAD_FAVORITE_ARTISTS_SUCCESS:
     return state.set('loadingInfos', false);
+  case SAVE_SEARCH_TERM:
+    return saveSearchTerm(state, action.term);
   default:
     return state;
   }
