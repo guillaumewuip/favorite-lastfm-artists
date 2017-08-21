@@ -16,6 +16,7 @@ import {
 } from '../epics/api';
 
 const initialState = fromJS({
+  user:          LASTFM_USER, // eslint-disable-line no-undef
   loadingTracks: true,
   loadingInfos:  true,
   artists:       {},

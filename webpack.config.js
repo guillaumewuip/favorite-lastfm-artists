@@ -15,6 +15,14 @@ const LASTFM_API_KEY = (() => {
   return process.env.LASTFM_API_KEY;
 })();
 
+const LASTFM_USER = (() => {
+  if (!process.env.LASTFM_USER) {
+    throw new Error('Need LASTFM_USER env variable');
+  }
+
+  return process.env.LASTFM_USER;
+})();
+
 module.exports = {
   entry: './src/index.jsx',
   output: {
@@ -61,6 +69,7 @@ module.exports = {
     new webpack.DefinePlugin({
       VERSION: JSON.stringify(pkg.version),
       LASTFM_API_KEY,
+      LASTFM_USER,
     })
   ],
   resolve: {

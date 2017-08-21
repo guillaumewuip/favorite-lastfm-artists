@@ -36,7 +36,8 @@ export const LOAD_FAVORITE_TRACKS_SUCCESS = 'LOAD_FAVORITE_TRACKS_SUCCESS';
 export const loadFavoriteTracksOnInitEpics = (action$, store, { lastFM }) =>
   action$
     .ofType(LOAD_FAVORITE_TRACKS)
-    .mergeMap(() => getFavoritesTracks(lastFM)('guillaumewuip') // TODO
+    .map(() => store.getState().get('user'))
+    .mergeMap((user) => getFavoritesTracks(lastFM)(user)
       .filter((result) => !!result)
       .map(addNewTracks)
       .concat(Observable.of({ type: LOAD_FAVORITE_TRACKS_SUCCESS }))
@@ -46,15 +47,18 @@ export const LOAD_FAVORITE_ARTISTS_SUCCESS = 'LOAD_FAVORITE_ARTISTS_SUCCESS';
 export const loadFavoriteArtistsInfo = (action$, store, { lastFM }) =>
   action$
     .ofType(LOAD_FAVORITE_TRACKS_SUCCESS)
-    .map(() => store.getState())
-    .mergeMap((state) => Observable.concat(
+    .map(() => ({
+      artists: store.getState().get('artists'),
+      user:    store.getState().get('user'),
+    }))
+    .mergeMap(({ artists, user }) => Observable.concat(
       Observable
-        .from(state.get('artists').toArray())
+        .from(artists.toArray())
         .mergeMap(
           (artist) => getArtistInfo(lastFM)(
             artist.get('name'),
             artist.get('mbid'),
-            'guillaumewuip' // TODO
+            user
           // don't break stream if unknown artist
           ).catch(() => Observable.empty())
         )
