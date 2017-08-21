@@ -1,7 +1,12 @@
+$break-small: 400px;
 
 .tag-wrapper {
   line-height: 1.3em;
   font-family: "Inconsolata", sans-serif;
+
+  @media screen and (max-width: $break-small) {
+    line-height: 5em;
+  }
 }
 
   .tag {
@@ -22,6 +27,9 @@
 
   .tag.mod-clickable {
     cursor: pointer;
+    @media screen and (max-width: $break-small) {
+      padding: 5px 6px;
+    }
   }
 
 .tag.mod-big {

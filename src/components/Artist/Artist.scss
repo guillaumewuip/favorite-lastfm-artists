@@ -1,3 +1,5 @@
+$break-small: 400px;
+$break-large: 1200px;
 
 .artists-container {
   display: flex;
@@ -10,8 +12,16 @@
   .artist {
     flex: 1;
     padding: 4px;
-    flex-basis: 12%;
-    max-width: 20%;
+    flex-basis: 25%;
+    max-width: 30%;
+    @media screen and (max-width: $break-small) {
+      flex-basis: 50%;
+      max-width: 50%;
+    }
+    @media screen and (min-width: $break-large) {
+      flex-basis: 12%;
+      max-width: 20%;
+    }
     background: #090b0e;
   }
 
